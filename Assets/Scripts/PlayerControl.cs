@@ -20,21 +20,20 @@ public class PlayerControl : MonoBehaviour{
 
 		if (Physics2D.Linecast(lineStart.position, lineEnd.position, 1 << LayerMask.NameToLayer("Guard")))
 		{
-			Debug.Log("farts");
-
 			whatIHit = Physics2D.Linecast(lineStart.position, lineEnd.position, 1 << LayerMask.NameToLayer("Guard"));
 			interact = true;
 
 		}
 		else 
 		{
-			Debug.Log("poop");
 			interact = false;
 		}
 		if (Input.GetKeyDown(KeyCode.E) && interact == true) 
 		{
 			Destroy((whatIHit.collider.gameObject));
 		}
+
+		Physics2D.IgnoreLayerCollision(8,9);
 	}
 
 	void Movement() {
