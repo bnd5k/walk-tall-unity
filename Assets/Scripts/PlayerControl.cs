@@ -4,7 +4,8 @@ using System.Collections;
 public class PlayerControl : MonoBehaviour{
 
 	public bool interact = false;
-	public Transform lineStart, lineEnd;
+	public bool grounded = false;
+	public Transform lineStart, lineEnd, groundedEnd;
 
 	RaycastHit2D whatIHit;
 
@@ -17,6 +18,9 @@ public class PlayerControl : MonoBehaviour{
 	void Raycasting()
 	{
 		Debug.DrawLine(lineStart.position, lineEnd.position, Color.green);
+		Debug.DrawLine(this.transform.position, groundedEnd.position, Color.green);
+
+		grounded = Physics2D.Linecast(this.transform.position, groundedEnd.position, 1 << LayerMask.NameToLayer("Ground"));
 
 		if (Physics2D.Linecast(lineStart.position, lineEnd.position, 1 << LayerMask.NameToLayer("Guard")))
 		{
@@ -47,6 +51,11 @@ public class PlayerControl : MonoBehaviour{
 			transform.Translate(Vector2.right * 4f * Time.deltaTime);
 			transform.localRotation =  Quaternion.Euler(0, 180, 0);
 
+		}
+		if(Input.GetKeyDown(KeyCode.Space) && grounded == true) 
+		{
+			// FIXME: Jumping not working
+			GetComponent<Rigidbody2D>().AddForce(Vector2.up * 200f);
 		}
 	}
 }
