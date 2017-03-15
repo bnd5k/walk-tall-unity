@@ -6,6 +6,14 @@ public class GuardLogic : MonoBehaviour {
 	public Transform sightStart, sightEnd;
 
 	public bool spotted = false;
+	public bool facingLeft = true;
+
+	public GameObject arrow;
+
+	void Start() 
+	{
+		Invoke("Patrol", Random.Range(2f, 6f));
+	}
 
 	void Update()
 	{
@@ -27,7 +35,29 @@ public class GuardLogic : MonoBehaviour {
 
 	void Behaviors() 
 	{
-		
+		if (spotted == true)
+		{
+			arrow.SetActive(true);
+		}
+		else
+		{
+			arrow.SetActive(false);
+		}
+
 	}
 
+	void Patrol() {
+		facingLeft = !facingLeft; // toggle that shit
+
+		if (facingLeft == true)
+		{
+			
+			transform.localRotation = Quaternion.Euler(0, 0, 0);
+
+		}
+		else 
+		{
+			transform.localRotation = Quaternion.Euler(0, 180, 0);
+		}
+	}
 }
